@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+// fetch('http://localhost:3001/api', { mode: 'no-cors'}).then((res) => {
+//   console.log(res);
+// })
+
 class App extends Component {
   render() {
     return (

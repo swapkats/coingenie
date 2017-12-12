@@ -2,15 +2,22 @@
   "name": "coingenie",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
+    "crypto": "^1.0.1",
+    "jayson": "^2.0.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "express": "^4.16.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently 'node server.js' 'react-scripts start'",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.1"
   }
 }
