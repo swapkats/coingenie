@@ -1,0 +1,23 @@
+body, html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.hero__jumbotron {
+  position: relative;
+  min-height: 80%;
+  background-color: transparent;
+}
+
+.hero__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url(polina.jpg) no-repeat;
+}
+
+.hero__logo {
+  /*font-weight: bolder;*/
+}
