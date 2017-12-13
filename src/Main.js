@@ -36,22 +36,51 @@ class Main extends Component {
     const { fromValue, fromCurrency, toCurrency } = this.state;
     const { currencies, exchangeAmount } = this.props;
     return (
-      <div>
-        <input value={fromValue} />
-        <CurrencyDropdown
-          currencies={currencies}
-          selected={fromCurrency}
-          disabled={toCurrency}
-          onChange={fromCurrency => this.fromCurrencyChange(fromCurrency)}
-        />
-        <span>=</span>
-        <input value={exchangeAmount} />
-        <CurrencyDropdown
-          currencies={currencies}
-          selected={toCurrency}
-          disabled={fromCurrency}
-          onChange={toCurrency => this.toCurrencyChange(toCurrency)}
-        />
+      <ExchangeCard
+        fromValue={fromValue}
+        fromCurrency={fromCurrency}
+        toCurrency={toCurrency}
+        exchangeAmount={exchangeAmount}
+        currencies={currencies}
+        onFromCurrencyChange={this.fromCurrencyChange}
+        onToCurrencyChange={this.toCurrencyChange}
+      />
+    );
+  }
+}
+
+class ExchangeCard extends React.PureComponent {
+
+  render() {
+    const { fromValue, fromCurrency, toCurrency, currencies, exchangeAmount } = this.props;
+    return (
+      <div class="card" style={{width: '25rem'}}>
+        <div class="card-body">
+          <h6 class="card-subtitle mb-2 text-muted">{fromValue} {fromCurrency.toUpperCase()} equals</h6>
+          <h4 class="card-title">{exchangeAmount} {toCurrency.toUpperCase()}</h4>
+          <div>
+            <div class="input-group">
+              <input class="form-control" value={fromValue} />
+              <CurrencyDropdown
+                currencies={currencies}
+                selected={fromCurrency}
+                disabled={toCurrency}
+                onChange={fromCurrency => this.props.onFromCurrencyChange(fromCurrency)}
+              />
+            </div>
+            <div class="input-group">
+              <input class="form-control" value={exchangeAmount} />
+              <CurrencyDropdown
+                currencies={currencies}
+                selected={toCurrency}
+                disabled={fromCurrency}
+                onChange={toCurrency => this.props.onToCurrencyChange(toCurrency)}
+              />
+            </div>
+          </div>
+          <a href="#" class="card-link">Refresh</a>
+          <a href="#" class="card-link pull-right">Remove</a>
+        </div>
       </div>
     );
   }
