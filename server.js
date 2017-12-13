@@ -7,6 +7,24 @@ const changelly = new Changelly('65c406e6db774842b3da8660fa3fe70f', '996e1d2d250
 app.set("port", process.env.PORT || 3001);
 
 /* GET users listing. */
+app.get('/api/currencies', function(req, res, next) {
+  changelly.getCurrencies(function(err, data) {
+    if (err){
+      console.log('Error!', err);
+      res.json(data);
+    } else {
+      res.json(data);
+      // console.log('getExchangeAmount', data);
+    }
+  });
+});
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+})
+
 app.get('/api/exchange/:from/:to', function(req, res, next) {
   const amount = req.query.amount;
   const { from, to } = req.params;

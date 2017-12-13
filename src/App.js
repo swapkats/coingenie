@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import store from './store';
+import { Provider, connect } from 'react-redux';
+import ErrorBoundary from './components/ErrorBoundary';
+import Main from './Main';
 import './App.css';
-
-// fetch('http://localhost:3001/api', { mode: 'no-cors'}).then((res) => {
-//   console.log(res);
-// })
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <ErrorBoundary showError={true}>
+        <Provider store={store}>
+          <Main />
+        </Provider>
+      </ErrorBoundary>
     );
   }
 }
