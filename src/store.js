@@ -1,14 +1,15 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { compose, createStore, combineReducers, applyMiddleware } from 'redux';
+import persistState from 'redux-localstorage';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 
-let store;
+let enhancer;
 
 if (process.env.NODE_ENV === 'production') {
-  store = createStore(combineReducers(reducers), applyMiddleware(thunk));
+  enhancer = compose(applyMiddleware(thunk));
 } else {
   const rdt = require('redux-devtools-extension');
-  store = createStore(combineReducers(reducers), rdt.composeWithDevTools(applyMiddleware(thunk)));
+  enhancer = compose(rdt.composeWithDevTools(applyMiddleware(thunk)));
 }
 
-export default store;
+export default createStore(combineReducers(reducers), enhancer, persistState());

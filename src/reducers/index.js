@@ -1,7 +1,7 @@
 import currencies from './currencies';
-import exchangeAmount from './exchangeAmount';
+import history from './history';
 
 export default {
   currencies,
-  exchangeAmount,
+  history,
 };

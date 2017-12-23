@@ -25,7 +25,7 @@ app.use(function(req, res, next) {
   next();
 })
 
-app.get('/api/exchange/:from/:to', function(req, res, next) {
+app.get('/api/changelly/:from/:to', function(req, res, next) {
   const amount = req.query.amount;
   const { from, to } = req.params;
   if (!amount || isNaN(amount)) {

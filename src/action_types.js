@@ -1,5 +1,6 @@
 const actionTypes = {
   FETCH_EXCHANGE_AMOUNT_SUCCESS: 'FETCH_EXCHANGE_AMOUNT_SUCCESS',
+  UPDATE_HISTORY: 'UPDATE_HISTORY',
 };
 
 export default actionTypes;

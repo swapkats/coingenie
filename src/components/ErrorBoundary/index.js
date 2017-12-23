@@ -22,8 +22,7 @@ class ErrorBoundary extends React.PureComponent {
   }
 
   render() {
-    const { hasError, info, error } = this.state;
-    const { showError } = this.props;
+    const { hasError } = this.state;
     return hasError
       ? (
         <div style={{padding: 30, textAlign: 'center'}}>
