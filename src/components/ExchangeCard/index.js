@@ -89,7 +89,7 @@ class ExchangeCard extends React.Component {
                       <tr key={exchange.exchange}>
                         <td>{exchange.exchange}</td>
                         <td style={{textAlign: 'right'}}>{exchange.minimum}</td>
-                        <td style={{textAlign: 'right'}}>{exchange.maxLimit || 'NA'}</td>
+                        <td style={{textAlign: 'right'}}>{exchange.maxLimit || 'No Limit'}</td>
                         <td style={{textAlign: 'right'}}>{exchange.amount}</td>
                       </tr>
                     ))}

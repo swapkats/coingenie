@@ -4,17 +4,17 @@ const initialState = [
   {
     id: 0,
     from: 'btc',
-    to: 'eth',
+    to: 'ltc',
     value: 0.1,
     exchanges: [],
   },
   {
     id: 1,
     from: 'btc',
-    to: 'ltc',
-    value: 0.1,
+    to: 'eth',
+    value: 1,
     exchanges: [],
-  }
+  },
 ];
 
 export default function(state = initialState, action) {
