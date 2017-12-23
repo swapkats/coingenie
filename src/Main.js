@@ -21,7 +21,7 @@ class Main extends Component {
             from={item.from}
             to={item.to}
             value={item.value}
-            exchange={item.exchange}
+            exchanges={item.exchanges}
             currencies={currencies}
             onHistoryUpdate={onHistoryUpdate}
           />

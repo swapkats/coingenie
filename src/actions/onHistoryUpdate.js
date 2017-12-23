@@ -5,20 +5,19 @@ export default (id, from, to, value) =>
     const { history } = getState();
     const item = history.find(item => item.id === id);
     if (item.from !== from || item.to !== to) {
-      dispatch(addNewHistoryItem(history.length, from, to, value, {}));
+      dispatch(addNewHistoryItem(history.length, from, to, value, []));
       return;
     }
-    const exchanges = ['changelly'];
+    const exchanges = ['changelly', 'shapeshift'];
     exchanges.forEach(exchange => {
       dispatch(fetchExchangeAmount(id, from, to, value, exchange));
     })
   }
 
-const addNewHistoryItem = (id, from, to, value, exchange = {}) =>
+const addNewHistoryItem = (id, from, to, value, exchanges = []) =>
   (dispatch, getState) => {
     const { history } = getState();
-    console.log({ id, from, to, value, exchange })
-    history.push({ id, from, to, value, exchange });
+    history.push({ id, from, to, value, exchanges });
     dispatch({
       type: types.UPDATE_HISTORY,
       history
@@ -40,9 +39,18 @@ const fetchExchangeAmount = (id, from, to, value, exchange) =>
           item.from = from;
           item.to = to;
           item.value = value;
-          item.exchange = Object.assign({}, item.exchange, {
-            [`${exchange}`]: parseFloat(res.result)
-          });
+          res.exchange = exchange;
+          const exchanges = item.exchanges.map(exchange => exchange.exchange);
+          if (exchanges.includes(exchange)) {
+            item.exchanges.map(item => {
+              if (item.exchange === exchange) {
+                return res;
+              }
+              return item;
+            });
+          } else {
+            item.exchanges.push(res);
+          }
           dispatch({
             type: types.UPDATE_HISTORY,
             history

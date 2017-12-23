@@ -9,3 +9,19 @@
 .ex__group {
   width: 240px;
 }
+
+.ex__body {
+  display: flex;
+}
+
+.ex__tableWrap {
+  padding-left: 20px;
+  font-size: 1rem;
+  margin-left: 20px;
+  border-left: 1px solid #eee;
+}
+
+.ex__tableWrap th {
+  text-align: right;
+  font-weight: normal;
+}

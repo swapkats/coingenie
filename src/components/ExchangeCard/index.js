@@ -27,37 +27,68 @@ class ExchangeCard extends React.PureComponent {
   }
 
   render() {
-    const { value, from, to, currencies, exchange } = this.props;
-    let amount = exchange.changelly || '';
+    const { value, from, to, currencies, exchanges } = this.props;
+    let amount =  0;
+    exchanges.map(exchange => {
+      amount = Math.max(exchange.amount, parseFloat(amount));
+    })
     return (
       <div className="card ex__card">
         <div className="card-body">
-          <h6 className="card-subtitle mb-2 text-muted">{value} {from.toUpperCase()} = {exchange.changelly || ''} {to.toUpperCase()}</h6>
+          <h6 className="card-subtitle mb-2 text-muted">{value} {from.toUpperCase()} = {amount || ''} {to.toUpperCase()}</h6>
           {/* <h4 className="card-title">{value} {from.toUpperCase()} = {exchange.changelly || ''} {to.toUpperCase()}</h4> */}
-          <div>
-            <div className="input-group ex__group">
-              <DebounceInput
-                className="form-control ex__input"
-                value={value}
-                onChange={this.onValueChange}
-                debounceTimeout={500}
-              />
-              <CurrencyDropdown
-                currencies={currencies}
-                selected={from}
-                disabled={to}
-                onChange={from => this.onFromChange(from)}
-              />
+          <div className="ex__body">
+            <div>
+              <div className="input-group ex__group">
+                <DebounceInput
+                  className="form-control ex__input"
+                  value={value}
+                  onChange={this.onValueChange}
+                  debounceTimeout={500}
+                />
+                <CurrencyDropdown
+                  currencies={currencies}
+                  selected={from}
+                  disabled={to}
+                  onChange={from => this.onFromChange(from)}
+                />
+              </div>
+              <div style={{height: '5px'}} />
+              <div className="input-group ex__group">
+                <input className="form-control ex__input" value={amount} onChange={e => this.onToValueChange(e.target.value)} />
+                <CurrencyDropdown
+                  currencies={currencies}
+                  selected={to}
+                  disabled={from}
+                  onChange={to => this.onToChange(to)}
+                />
+              </div>
             </div>
-            <div style={{height: '5px'}} />
-            <div className="input-group ex__group">
-              <input className="form-control ex__input" value={amount} onChange={e => this.onToValueChange(e.target.value)} />
-              <CurrencyDropdown
-                currencies={currencies}
-                selected={to}
-                disabled={from}
-                onChange={to => this.onToChange(to)}
-              />
+            <div className="ex__tableWrap">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">&nbsp;</th>
+                    <th scope="col">Minimum</th>
+                    <th scope="col">Limit</th>
+                    <th scope="col">Exchange Amount</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    exchanges.map(exchange => (
+                      <tr key={exchange.exchange}>
+                        <td>{exchange.exchange}</td>
+                        <td style={{textAlign: 'right'}}>{exchange.minimum}</td>
+                        <td style={{textAlign: 'right'}}>{exchange.maxLimit || 'NA'}</td>
+                        <td style={{textAlign: 'right'}}>{exchange.amount}</td>
+                      </tr>
+                    ))
+                  }
+                  <tr>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
           {/* <button href="#" className="card-link">Refresh</button>

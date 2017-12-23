@@ -1,4 +1,5 @@
 var express = require('express');
+var fetch = require('node-fetch');
 var Changelly = require('./lib/changelly');
 const app = express();
 
@@ -32,16 +33,61 @@ app.get('/api/changelly/:from/:to', function(req, res, next) {
     error = { message: 'Amount is invalid' };
     res.json(error);
   }
-  changelly.getExchangeAmount(from, to, amount, function(err, data) {
+  changelly.getMinAmount(from, to, function(err, data) {
     if (err){
       console.log('Error!', err);
       res.json(data);
     } else {
-      res.json(data);
-      // console.log('getExchangeAmount', data);
+      const minimum = data.result;
+      changelly.getExchangeAmount(from, to, amount, function(err, data) {
+        if (err){
+          console.log('Error!', err);
+          res.json(data);
+        } else {
+          data.minimum = minimum;
+          res.json(decorator(data, 'changelly'));
+        }
+      });
     }
-  });
+  })
+
 });
+
+app.get('/api/shapeshift/:from/:to', function(req, res, next) {
+  const amount = req.query.amount;
+  const { from, to } = req.params;
+  if (!amount || isNaN(amount)) {
+    error = { message: 'Amount is invalid' };
+    res.json(error);
+  }
+  fetch(`http://shapeshift.io/marketinfo/${from}_${to}`)
+    .then(res => res.json())
+    .then(function(data) {
+      data.amount = data.rate * amount - data.minerFee;
+      res.json(decorator(data, 'shapeshift'));
+    });
+});
+
+const decorator = (data, exchange) => {
+  switch(exchange) {
+    case 'changelly': {
+      return {
+        amount: parseFloat(data.result),
+        minimum: parseFloat(data.minimum),
+        maxLimit: null,
+        fee: null,
+      }
+    }
+    case 'shapeshift': {
+      return {
+        amount: data.amount,
+        minimum: data.minimum,
+        maxLimit: data.maxLimit,
+        fee: data.minerFee,
+      }
+    }
+  }
+}
 
 app.listen(app.get("port"), () => {
   console.log(`Find the server at: http://localhost:${app.get("port")}/`); // eslint-disable-line no-console

@@ -6,7 +6,14 @@ const initialState = [
     from: 'btc',
     to: 'etc',
     value: 0.1,
-    exchange: {},
+    exchanges: [],
+  },
+  {
+    id: 1,
+    from: 'btc',
+    to: 'ltc',
+    value: 0.1,
+    exchanges: [],
   }
 ];
 
