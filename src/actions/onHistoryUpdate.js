@@ -21,7 +21,8 @@ const addNewHistoryItem = (id, from, to, value, exchanges = []) =>
     dispatch({
       type: types.UPDATE_HISTORY,
       history
-    })
+    });
+    document.body.scrollTop = 0;
   }
 
 const fetchExchangeAmount = (id, from, to, value, exchange) =>
