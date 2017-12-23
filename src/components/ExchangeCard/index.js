@@ -22,7 +22,7 @@ class ExchangeCard extends React.PureComponent {
     const { id, from, to } = this.props;
     setTimeout(
       this.props.onHistoryUpdate(id, from, to, e.target.value),
-      5000,
+      2000,
     );
   }
 
