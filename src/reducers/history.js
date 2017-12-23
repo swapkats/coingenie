@@ -4,7 +4,7 @@ const initialState = [
   {
     id: 0,
     from: 'btc',
-    to: 'etc',
+    to: 'eth',
     value: 0.1,
     exchanges: [],
   },
@@ -23,7 +23,7 @@ export default function(state = initialState, action) {
     case types.UPDATE_EXCHANGE_AMOUNT:
     case types.ADD_HISTORY_ITEM:
     case types.UPDATE_HISTORY:
-      return [...action.history];
+      return [...action.history].sort((a, b) => a.id < b.id);
     default:
       return state;
   }

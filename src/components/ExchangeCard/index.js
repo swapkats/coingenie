@@ -9,8 +9,8 @@ class ExchangeCard extends React.Component {
   }
 
   onFromChange = from => {
-    const { id, to, value } = this.props;
-    this.props.onHistoryUpdate(id, from, to, value);
+    const { id, to, value, isRouteCard } = this.props;
+    this.props.onHistoryUpdate(id, from, to, value, isRouteCard);
   }
 
   onRefresh = () => {
@@ -19,32 +19,30 @@ class ExchangeCard extends React.Component {
   }
 
   onToChange = to => {
-    const { id, from, value } = this.props;
-    this.props.onHistoryUpdate(id, from, to, value);
+    const { id, from, value, isRouteCard } = this.props;
+    this.props.onHistoryUpdate(id, from, to, value, isRouteCard);
   }
 
   onValueChange = e => {
-    const { id, from, to } = this.props;
+    const { id, from, to, isRouteCard } = this.props;
     setTimeout(
-      this.props.onHistoryUpdate(id, from, to, e.target.value),
+      this.props.onHistoryUpdate(id, from, to, e.target.value, isRouteCard),
       2000,
     );
   }
 
   render() {
-    console.log('ExchangeCard');
     const { id, value, from, to, currencies, exchanges } = this.props;
     let amount =  0;
     exchanges.map(exchange => {
       amount = Math.max(exchange.amount, parseFloat(amount));
     })
-    console.log(exchanges.length);
     return (
       <div className="card ex__card">
         <div className="card-body">
           <div className="ex__body">
             <div className="ex__left">
-              <h6 className="card-subtitle mb-2 text-muted">{value} {from.toUpperCase()} = {amount || ''} {to.toUpperCase()}</h6>
+              <a href={`/${from}/${to}/${value}`} className="ex__link">{value} {from.toUpperCase()} = {amount || ''} {to.toUpperCase()}</a>
               {/* <h4 className="card-title">{value} {from.toUpperCase()} = {exchange.changelly || ''} {to.toUpperCase()}</h4> */}
               <div>
                 <div className="input-group ex__group">

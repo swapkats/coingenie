@@ -11,9 +11,33 @@ class Main extends Component {
     this.props.initContext();
   }
 
-  render() {
-    console.log('MAIN');
+  renderLocation = (queryParams) => {
     const { history, currencies, onHistoryUpdate, onRemoveCard } = this.props;
+    const historyItem = history[history.length - 1];
+    console.log(historyItem);
+    return (
+      <div style={{paddingTop: '20px'}}>
+        <ExchangeCard
+          id={history.length}
+          from={queryParams[1]}
+          to={queryParams[2]}
+          value={queryParams[3]}
+          exchanges={historyItem.exchanges}
+          currencies={currencies}
+          onRemoveCard={onRemoveCard}
+          onHistoryUpdate={onHistoryUpdate}
+          isRouteCard={true}
+        />
+      </div>
+    );
+  }
+
+  render() {
+    const { history, currencies, onHistoryUpdate, onRemoveCard } = this.props;
+    const queryParams = window.location.pathname.split('/');
+    if (queryParams.length > 3) {
+      return this.renderLocation(queryParams);
+    }
     return (
       <div style={{paddingTop: '20px'}}>
         {history.map((item, index) =>

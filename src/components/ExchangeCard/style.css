@@ -58,3 +58,8 @@
   display: flex;
   justify-content: space-between;
 }
+
+.ex__link {
+  display: inline-block;
+  margin-bottom: 5px;
+}
