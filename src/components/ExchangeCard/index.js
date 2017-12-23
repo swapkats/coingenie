@@ -2,7 +2,7 @@ import React from 'react';
 import { DebounceInput } from 'react-debounce-input';
 import './style.css';
 
-class ExchangeCard extends React.PureComponent {
+class ExchangeCard extends React.Component {
   componentWillMount() {
     const { id, from, to, value } = this.props;
     this.props.onHistoryUpdate(id, from, to, value);
@@ -32,12 +32,13 @@ class ExchangeCard extends React.PureComponent {
   }
 
   render() {
+    console.log('ExchangeCard');
     const { id, value, from, to, currencies, exchanges } = this.props;
     let amount =  0;
     exchanges.map(exchange => {
       amount = Math.max(exchange.amount, parseFloat(amount));
     })
-    console.log(exchanges);
+    console.log(exchanges.length);
     return (
       <div className="card ex__card">
         <div className="card-body">
@@ -86,16 +87,14 @@ class ExchangeCard extends React.PureComponent {
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                    exchanges.map(exchange => (
+                  {exchanges.map(exchange => (
                       <tr key={exchange.exchange}>
                         <td>{exchange.exchange}</td>
                         <td style={{textAlign: 'right'}}>{exchange.minimum}</td>
                         <td style={{textAlign: 'right'}}>{exchange.maxLimit || 'NA'}</td>
                         <td style={{textAlign: 'right'}}>{exchange.amount}</td>
                       </tr>
-                    ))
-                  }
+                    ))}
                   <tr>
                   </tr>
                 </tbody>

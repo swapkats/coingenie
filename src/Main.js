@@ -12,9 +12,10 @@ class Main extends Component {
   }
 
   render() {
+    console.log('MAIN');
     const { history, currencies, onHistoryUpdate, onRemoveCard } = this.props;
     return (
-      <div>
+      <div style={{paddingTop: '20px'}}>
         {history.map((item, index) =>
           <ExchangeCard
             key={index}
