@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import initContext from './actions/initContext';
 import onHistoryUpdate from './actions/onHistoryUpdate';
+import onRemoveCard from './actions/onRemoveCard';
 import ExchangeCard from './components/ExchangeCard';
 import './Main.css';
 
@@ -11,18 +12,19 @@ class Main extends Component {
   }
 
   render() {
-    const { history, currencies, onHistoryUpdate } = this.props;
+    const { history, currencies, onHistoryUpdate, onRemoveCard } = this.props;
     return (
       <div>
-        {history.sort((a, b) => a.id < b.id).map(item =>
+        {history.map((item, index) =>
           <ExchangeCard
-            key={item.id}
+            key={index}
             id={item.id}
             from={item.from}
             to={item.to}
             value={item.value}
             exchanges={item.exchanges}
             currencies={currencies}
+            onRemoveCard={onRemoveCard}
             onHistoryUpdate={onHistoryUpdate}
           />
         )}
@@ -36,4 +38,4 @@ const mapStateToProps = (state) => ({
   history: state.history,
 })
 
-export default connect(mapStateToProps, { initContext, onHistoryUpdate })(Main);
+export default connect(mapStateToProps, { initContext, onHistoryUpdate, onRemoveCard })(Main);

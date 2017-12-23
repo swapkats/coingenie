@@ -19,6 +19,9 @@ const initialState = [
 
 export default function(state = initialState, action) {
   switch (action.type) {
+    case types.REMOVE_HISTORY_ITEM:
+    case types.UPDATE_EXCHANGE_AMOUNT:
+    case types.ADD_HISTORY_ITEM:
     case types.UPDATE_HISTORY:
       return [...action.history];
     default:

@@ -1,13 +1,10 @@
 .ex__card {
   margin-top: 30px;
+  font-size: 1rem;
 }
 
 .ex__input {
   text-align: right;
-}
-
-.ex__group {
-  width: 240px;
 }
 
 .ex__body {
@@ -15,13 +12,48 @@
 }
 
 .ex__tableWrap {
+  flex: 1;
   padding-left: 20px;
-  font-size: 1rem;
   margin-left: 20px;
   border-left: 1px solid #eee;
 }
 
 .ex__tableWrap th {
+  padding: 5px;
   text-align: right;
   font-weight: normal;
+  border-top: none;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.ex__tableWrap td {
+  text-align: right;
+  padding: 5px;
+}
+
+.ex__left {
+  flex-basis: 275px;
+}
+
+.ex__group {
+  margin-bottom: 5px;
+}
+
+.ex__button {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--primary);
+  cursor: pointer;
+}
+
+.ex__button:focus {
+  border: none;
+  outline: none;
+}
+
+.ex__btnWrap {
+  display: flex;
+  justify-content: space-between;
 }

@@ -12,4 +12,8 @@ if (process.env.NODE_ENV === 'production') {
   enhancer = compose(rdt.composeWithDevTools(applyMiddleware(thunk)));
 }
 
-export default createStore(combineReducers(reducers), enhancer, persistState());
+export default createStore(
+  combineReducers(reducers),
+  enhancer,
+  // persistState()
+);

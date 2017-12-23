@@ -13,6 +13,11 @@ class ExchangeCard extends React.PureComponent {
     this.props.onHistoryUpdate(id, from, to, value);
   }
 
+  onRefresh = () => {
+    const { id, from, to, value } = this.props;
+    this.props.onHistoryUpdate(id, from, to, value);
+  }
+
   onToChange = to => {
     const { id, from, value } = this.props;
     this.props.onHistoryUpdate(id, from, to, value);
@@ -27,16 +32,17 @@ class ExchangeCard extends React.PureComponent {
   }
 
   render() {
-    const { value, from, to, currencies, exchanges } = this.props;
+    const { id, value, from, to, currencies, exchanges } = this.props;
     let amount =  0;
     exchanges.map(exchange => {
       amount = Math.max(exchange.amount, parseFloat(amount));
     })
+    console.log(exchanges);
     return (
       <div className="card ex__card">
         <div className="card-body">
           <div className="ex__body">
-            <div>
+            <div className="ex__left">
               <h6 className="card-subtitle mb-2 text-muted">{value} {from.toUpperCase()} = {amount || ''} {to.toUpperCase()}</h6>
               {/* <h4 className="card-title">{value} {from.toUpperCase()} = {exchange.changelly || ''} {to.toUpperCase()}</h4> */}
               <div>
@@ -54,7 +60,6 @@ class ExchangeCard extends React.PureComponent {
                     onChange={from => this.onFromChange(from)}
                   />
                 </div>
-                <div style={{height: '5px'}} />
                 <div className="input-group ex__group">
                   <input className="form-control ex__input" value={amount} onChange={e => this.onToValueChange(e.target.value)} />
                   <CurrencyDropdown
@@ -65,15 +70,19 @@ class ExchangeCard extends React.PureComponent {
                   />
                 </div>
               </div>
+              <div className="ex__btnWrap">
+                <button onClick={() => this.props.onRemoveCard(id)} className="ex__button card-link pull-right">Remove</button>
+                <button onClick={this.onRefresh} className="ex__button card-link">Refresh</button>
+              </div>
             </div>
             <div className="ex__tableWrap">
               <table className="table">
                 <thead>
                   <tr>
                     <th scope="col">&nbsp;</th>
-                    <th scope="col">Minimum</th>
-                    <th scope="col">Limit</th>
-                    <th scope="col">Exchange Amount</th>
+                    <th scope="col" className="text-muted">Minimum</th>
+                    <th scope="col" className="text-muted">Limit</th>
+                    <th scope="col" className="text-muted">Exchange Amount</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -93,8 +102,6 @@ class ExchangeCard extends React.PureComponent {
               </table>
             </div>
           </div>
-          {/* <button href="#" className="card-link">Refresh</button>
-          <button href="#" className="card-link pull-right">Remove</button> */}
         </div>
       </div>
     );

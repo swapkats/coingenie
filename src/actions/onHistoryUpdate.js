@@ -19,7 +19,7 @@ const addNewHistoryItem = (id, from, to, value, exchanges = []) =>
     const { history } = getState();
     history.push({ id, from, to, value, exchanges });
     dispatch({
-      type: types.UPDATE_HISTORY,
+      type: types.ADD_HISTORY_ITEM,
       history
     });
     document.body.scrollTop = 0;
@@ -53,7 +53,7 @@ const fetchExchangeAmount = (id, from, to, value, exchange) =>
             item.exchanges.push(res);
           }
           dispatch({
-            type: types.UPDATE_HISTORY,
+            type: types.UPDATE_EXCHANGE_AMOUNT,
             history
           });
         });
